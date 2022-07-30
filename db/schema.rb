@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_003638) do
+ActiveRecord::Schema.define(version: 2022_07_30_104619) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.integer "shop_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_id"], name: "index_items_on_shop_id"
+  end
 
   create_table "requests", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -20,6 +36,12 @@ ActiveRecord::Schema.define(version: 2022_07_29_003638) do
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
+  create_table "shops", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -27,5 +49,7 @@ ActiveRecord::Schema.define(version: 2022_07_29_003638) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "addresses", "users"
+  add_foreign_key "items", "shops"
   add_foreign_key "requests", "users"
 end
